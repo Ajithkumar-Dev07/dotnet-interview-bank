@@ -46,6 +46,72 @@
     "content": "In ASP.NET Core, I register the service and its implementation in the built-in DI container. After registration, ASP.NET Core automatically provides the required IProductService instance when creating ProductController.",
     "code": "builder.Services.AddScoped<IProductService, ProductService>();",
     "codeLanguage": "csharp"
-  }
+  },
+    {
+        "id": "q7",
+        "heading": "What are the different service lifetimes in ASP.NET Core DI?",
+        "parentHeading": "What is Dependency Injection (DI) in ASP.NET Core?",
+        "content": "In my CRM project, I use three main service lifetimes: Singleton (one instance for the entire application), Scoped (one instance per request), and Transient (a new instance every time it's requested). Choosing the right lifetime is crucial for performance and resource management.",
+        "code": null,
+        "codeLanguage": null
+    },
+    
+  {
+    "id": "q8",
+    "heading": "What is the difference between NUnit and xUnit?",
+    "parentHeading": null,
+    "content": "NUnit and xUnit are popular unit-testing frameworks used in .NET applications to test business logic, services, and APIs. NUnit uses attributes like [Test], [SetUp], [TearDown], and [TestCase], while xUnit uses [Fact], [Theory], and constructor-based setup. NUnit uses [TestCase] for parameterized tests, while xUnit uses [Theory] with [InlineData]. Both support assertions, test isolation, parameterized testing, and integration with CI/CD. xUnit is commonly preferred for modern ASP.NET Core projects, while NUnit is also widely used.",
+    "code": "// NUnit\n[Test]\npublic void Add_ShouldReturnSum()\n{\n    var result = 10 + 20;\n\n    Assert.That(result, Is.EqualTo(30));\n}\n\n// xUnit\n[Fact]\npublic void Add_ShouldReturnSum()\n{\n    var result = 10 + 20;\n\n    Assert.Equal(30, result);\n}",
+    "codeLanguage": "csharp"
+  },
+  {
+    "id": "q9",
+    "heading": "What are the key differences between NUnit and xUnit?",
+    "parentHeading": "What is the difference between NUnit and xUnit?",
+    "content": "The main differences are in test attributes and test lifecycle management. NUnit uses [Test] for test methods, [TestCase] for parameterized tests, [SetUp] for setup, and [TearDown] for cleanup. xUnit uses [Fact] for normal tests, [Theory] with [InlineData] for parameterized tests, constructor-based setup, and IDisposable for cleanup.",
+    "code": "// NUnit\n[Test]\npublic void Add_ShouldReturnSum()\n{\n    Assert.That(10 + 20, Is.EqualTo(30));\n}\n\n[TestCase(10, 20, 30)]\n[TestCase(5, 5, 10)]\npublic void Add_ShouldReturnExpectedResult(int a, int b, int expected)\n{\n    Assert.That(a + b, Is.EqualTo(expected));\n}\n\n// xUnit\n[Fact]\npublic void Add_ShouldReturnSum()\n{\n    Assert.Equal(30, 10 + 20);\n}\n\n[Theory]\n[InlineData(10, 20, 30)]\n[InlineData(5, 5, 10)]\npublic void Add_ShouldReturnExpectedResult(int a, int b, int expected)\n{\n    Assert.Equal(expected, a + b);\n}",
+    "codeLanguage": "csharp"
+  },
+  {
+    "id": "q10",
+    "heading": "What is builder.Services in ASP.NET Core?",
+    "parentHeading": null,
+    "content": "builder.Services is the IServiceCollection in ASP.NET Core used to register application services and dependencies with the built-in Dependency Injection (DI) container. For example, I can register IProductService with ProductService using AddScoped. Later, ASP.NET Core automatically injects IProductService wherever it is required, such as in a controller or another service.",
+    "code": "var builder = WebApplication.CreateBuilder(args);\n\nbuilder.Services.AddControllers();\nbuilder.Services.AddScoped<IProductService, ProductService>();\nbuilder.Services.AddSingleton<ICacheService, CacheService>();",
+    "codeLanguage": "csharp"
+  },
+  {
+    "id": "q11",
+    "heading": "What are the different service lifetimes in ASP.NET Core DI?",
+    "parentHeading": "What is builder.Services in ASP.NET Core?",
+    "content": "ASP.NET Core provides three commonly used DI service lifetimes. AddScoped creates one instance per HTTP request. AddTransient creates a new instance every time the service is requested. AddSingleton creates one instance for the application's lifetime.",
+    "code": "builder.Services.AddScoped<IProductService, ProductService>();\nbuilder.Services.AddTransient<IEmailService, EmailService>();\nbuilder.Services.AddSingleton<ICacheService, CacheService>();",
+    "codeLanguage": "csharp"
+  },
+  {
+    "id": "q12",
+    "heading": "What is IActionResult in ASP.NET Core?",
+    "parentHeading": null,
+    "content": "IActionResult is an interface in ASP.NET Core MVC/Web API that represents the result returned by a controller action. It allows an action method to return different HTTP responses such as 200, 400, 404, and 401. For example, a controller action can return Ok(product) when the product is found and NotFound() when it does not exist.",
+    "code": "[HttpGet(\"{id}\")]\npublic IActionResult GetProduct(int id)\n{\n    var product = _productService.GetProduct(id);\n\n    if (product == null)\n        return NotFound();\n\n    return Ok(product);\n}",
+    "codeLanguage": "csharp"
+  },
+  {
+    "id": "q13",
+    "heading": "What are the common HTTP responses returned using IActionResult?",
+    "parentHeading": "What is IActionResult in ASP.NET Core?",
+    "content": "Using IActionResult, a controller action can return different HTTP responses depending on the result of the operation. Ok(product) returns HTTP 200, BadRequest() returns HTTP 400, NotFound() returns HTTP 404, and Unauthorized() returns HTTP 401.",
+    "code": "return Ok(product);          // HTTP 200\nreturn BadRequest();          // HTTP 400\nreturn NotFound();            // HTTP 404\nreturn Unauthorized();        // HTTP 401",
+    "codeLanguage": "csharp"
+  },
+    {
+        "id": "q14",
+        "heading": "What is the difference between IActionResult and ActionResult<T>?",
+        "parentHeading": "What is IActionResult in ASP.NET Core?",
+        "content": "IActionResult is a non-generic interface that allows returning different types of HTTP responses. ActionResult<T> is a generic class that allows returning a specific type (T) along with HTTP responses. For example, ActionResult<Product> can return Ok(product) or NotFound() while still providing type safety.",
+        "code": "[HttpGet(\"{id}\")]\npublic ActionResult<Product> GetProduct(int id)\n{\n    var product = _productService.GetProduct(id);\n\n    if (product == null)\n        return NotFound();\n\n    return Ok(product);\n}",
+        "codeLanguage": "csharp"
+    }
+
 
 ]
