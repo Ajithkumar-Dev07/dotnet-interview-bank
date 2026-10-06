@@ -111,7 +111,39 @@
         "content": "IActionResult is a non-generic interface that allows returning different types of HTTP responses. ActionResult<T> is a generic class that allows returning a specific type (T) along with HTTP responses. For example, ActionResult<Product> can return Ok(product) or NotFound() while still providing type safety.",
         "code": "[HttpGet(\"{id}\")]\npublic ActionResult<Product> GetProduct(int id)\n{\n    var product = _productService.GetProduct(id);\n\n    if (product == null)\n        return NotFound();\n\n    return Ok(product);\n}",
         "codeLanguage": "csharp"
-    }
+    },
+  {
+    "id": "q15",
+    "heading": "What is an Action Filter in ASP.NET Core?",
+    "parentHeading": null,
+    "content": "An Action Filter in ASP.NET Core MVC/Web API is a filter that allows us to execute custom logic before or after a controller action executes. Action filters are mainly used for cross-cutting concerns such as logging, validation, authorization checks, and measuring execution time. They help avoid repeating the same logic inside multiple controller actions.",
+    "code": "public class LoggingFilter : IActionFilter\n{\n    public void OnActionExecuting(ActionExecutingContext context)\n    {\n        Console.WriteLine(\"Before action execution\");\n    }\n\n    public void OnActionExecuted(ActionExecutedContext context)\n    {\n        Console.WriteLine(\"After action execution\");\n    }\n}",
+    "codeLanguage": "csharp"
+  },
+  {
+    "id": "q16",
+    "heading": "How do you apply an Action Filter to a controller?",
+    "parentHeading": "What is an Action Filter in ASP.NET Core?",
+    "content": "An Action Filter can be applied to a controller using the ServiceFilter attribute. The filter must first be registered with the ASP.NET Core DI container. When a request reaches the controller, the filter executes before the action and then after the action completes.",
+    "code": "[ServiceFilter(typeof(LoggingFilter))]\npublic class CustomerController : ControllerBase\n{\n    [HttpGet]\n    public IActionResult GetCustomers()\n    {\n        return Ok(\"Customers\");\n    }\n}",
+    "codeLanguage": "csharp"
+  },
+  {
+    "id": "q17",
+    "heading": "How do you register an Action Filter in Program.cs?",
+    "parentHeading": "What is an Action Filter in ASP.NET Core?",
+    "content": "The Action Filter can be registered with the built-in ASP.NET Core Dependency Injection container using AddScoped. After registration, it can be resolved and used by ServiceFilter.",
+    "code": "builder.Services.AddScoped<LoggingFilter>();",
+    "codeLanguage": "csharp"
+  },
+  {
+    "id": "q18",
+    "heading": "What is the execution flow of an Action Filter?",
+    "parentHeading": "What is an Action Filter in ASP.NET Core?",
+    "content": "The request reaches the application and the Action Filter executes its before-action logic. Then the controller action executes. After the action completes, the Action Filter executes its after-action logic before the response is returned.",
+    "code": "Request\n   ↓\nAction Filter - Before\n   ↓\nController Action\n   ↓\nAction Filter - After\n   ↓\nResponse",
+    "codeLanguage": "text"
+  }
 
 
 ]
