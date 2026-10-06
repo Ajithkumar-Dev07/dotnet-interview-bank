@@ -1,0 +1,18 @@
+[
+ {
+  "id": "q1",
+  "heading": "What is Swagger/OpenAPI and why is it used with a Web API?",
+  "parentHeading": null,
+  "content": "OpenAPI is a specification for describing a REST API's endpoints, request/response shapes, and auth requirements in a machine-readable document. Swagger (via Swashbuckle in .NET) generates that document from your controllers/DTOs automatically and serves an interactive UI, so consumers can explore and test endpoints without separate written documentation.",
+  "code": "var builder = WebApplication.CreateBuilder(args);\nbuilder.Services.AddEndpointsApiExplorer();\nbuilder.Services.AddSwaggerGen();\n\nvar app = builder.Build();\nif (app.Environment.IsDevelopment())\n{\n    app.UseSwagger();\n    app.UseSwaggerUI();\n}",
+  "codeLanguage": "csharp"
+ },
+ {
+  "id": "q2",
+  "heading": "How do you document an endpoint's responses and add a summary in Swagger?",
+  "parentHeading": null,
+  "content": "Use XML doc comments plus the [ProducesResponseType] attribute so Swashbuckle includes them in the generated spec and UI.",
+  "code": "/// <summary>Gets a product by id.</summary>\n[HttpGet(\"{id}\")]\n[ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]\n[ProducesResponseType(StatusCodes.Status404NotFound)]\npublic ActionResult<Product> Get(int id) { /* ... */ return Ok(); }",
+  "codeLanguage": "csharp"
+ }
+]

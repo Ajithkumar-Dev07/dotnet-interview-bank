@@ -1,0 +1,26 @@
+[
+ {
+  "id": "q1",
+  "heading": "Explain async/await and how Task-based asynchrony works.",
+  "parentHeading": null,
+  "content": "'async' marks a method as asynchronous, allowing it to use 'await' on a Task without blocking the calling thread. While the awaited operation (I/O, a web call, etc.) is in flight, the thread is freed to do other work; when the operation completes, execution resumes roughly where it left off. This improves throughput for I/O-bound work -- it does not make CPU-bound code faster by itself.",
+  "code": "public async Task<string> GetDataAsync(HttpClient client, string url)\n{\n    var response = await client.GetAsync(url);     // thread is released while waiting\n    response.EnsureSuccessStatusCode();\n    return await response.Content.ReadAsStringAsync();\n}",
+  "codeLanguage": "csharp"
+ },
+ {
+  "id": "q2",
+  "heading": "What are delegates and events, and how do they differ?",
+  "parentHeading": null,
+  "content": "A delegate is a type-safe reference to a method -- essentially a function pointer with a signature. An event is built on top of a delegate but restricts who can invoke it: only the declaring class can raise it, while subscribers (outside the class) can only add or remove handlers. Events are the standard way to implement the publish/subscribe pattern safely.",
+  "code": "public delegate void NotifyHandler(string message);\n\npublic class Publisher\n{\n    public event NotifyHandler OnNotify;\n\n    public void Raise(string msg) => OnNotify?.Invoke(msg);\n}\n\nvar pub = new Publisher();\npub.OnNotify += msg => Console.WriteLine($\"Received: {msg}\");\npub.Raise(\"Hello\");",
+  "codeLanguage": "csharp"
+ },
+ {
+  "id": "q3",
+  "heading": "What is the difference between IEnumerable and IQueryable?",
+  "parentHeading": null,
+  "content": "IEnumerable executes query operators in-memory on the client, once the data has already been pulled into a collection. IQueryable builds an expression tree that a provider (e.g. EF Core) translates into a query (e.g. SQL) and executes at the source, so filtering/sorting happens on the database before data is sent over the wire. Mixing them carelessly (e.g. calling .ToList() too early) is a common performance pitfall.",
+  "code": "// IQueryable: filter translates to SQL and runs in the database\nIQueryable<User> q = dbContext.Users.Where(u => u.IsActive);\n\n// IEnumerable: all rows pulled into memory first, filter runs in .NET\nIEnumerable<User> list = dbContext.Users.ToList().Where(u => u.IsActive);",
+  "codeLanguage": "csharp"
+ }
+]

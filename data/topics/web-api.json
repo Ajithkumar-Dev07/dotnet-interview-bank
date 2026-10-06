@@ -1,0 +1,18 @@
+[
+ {
+  "id": "q1",
+  "heading": "What's the difference between ASP.NET MVC and ASP.NET Web API (and how do they relate in ASP.NET Core)?",
+  "parentHeading": null,
+  "content": "Classic ASP.NET had separate MVC and Web API frameworks -- MVC returned views/HTML, Web API returned data (JSON/XML) over HTTP for clients like SPAs or mobile apps. In ASP.NET Core, the two were unified into one framework: Controllers can return Views or data depending on whether they inherit from Controller or ControllerBase and use attributes like [ApiController].",
+  "code": "[ApiController]\n[Route(\"api/[controller]\")]\npublic class ProductsController : ControllerBase\n{\n    [HttpGet(\"{id}\")]\n    public ActionResult<Product> Get(int id) => Ok(new Product { Id = id, Name = \"Sample\" });\n}",
+  "codeLanguage": "csharp"
+ },
+ {
+  "id": "q2",
+  "heading": "How do you implement API versioning in a Web API project?",
+  "parentHeading": null,
+  "content": "The Microsoft.AspNetCore.Mvc.Versioning package lets you version via URL segment, query string, or a header. URL-segment versioning (e.g. /api/v1/products) is the most discoverable and commonly used approach for public APIs.",
+  "code": "services.AddApiVersioning(options =>\n{\n    options.DefaultApiVersion = new ApiVersion(1, 0);\n    options.AssumeDefaultVersionWhenUnspecified = true;\n});\n\n[ApiVersion(\"1.0\")]\n[Route(\"api/v{version:apiVersion}/[controller]\")]\npublic class ProductsController : ControllerBase { }",
+  "codeLanguage": "csharp"
+ }
+]

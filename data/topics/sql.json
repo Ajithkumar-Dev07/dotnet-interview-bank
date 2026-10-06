@@ -1,0 +1,26 @@
+[
+ {
+  "id": "q1",
+  "heading": "What is the difference between INNER JOIN and LEFT JOIN?",
+  "parentHeading": null,
+  "content": "INNER JOIN returns only rows that have matching values in both tables. LEFT JOIN returns every row from the left table, with NULLs filled in for columns from the right table when there's no match.",
+  "code": "-- Only customers who have placed at least one order\nSELECT c.Name, o.OrderId\nFROM Customers c\nINNER JOIN Orders o ON o.CustomerId = c.Id;\n\n-- Every customer, with NULL OrderId if they have no orders\nSELECT c.Name, o.OrderId\nFROM Customers c\nLEFT JOIN Orders o ON o.CustomerId = c.Id;",
+  "codeLanguage": "sql"
+ },
+ {
+  "id": "q2",
+  "heading": "What is a Common Table Expression (CTE) and when would you use one?",
+  "parentHeading": null,
+  "content": "A CTE is a named, temporary result set defined with WITH, scoped to the query that follows it. It's useful for breaking a complex query into readable steps, and is required for recursive queries (e.g. walking a manager/employee hierarchy).",
+  "code": "WITH RecentOrders AS (\n    SELECT CustomerId, OrderId, OrderDate\n    FROM Orders\n    WHERE OrderDate >= DATEADD(month, -3, GETDATE())\n)\nSELECT c.Name, ro.OrderId\nFROM Customers c\nJOIN RecentOrders ro ON ro.CustomerId = c.Id;",
+  "codeLanguage": "sql"
+ },
+ {
+  "id": "q3",
+  "heading": "What's the difference between WHERE and HAVING?",
+  "parentHeading": null,
+  "content": "WHERE filters individual rows before any grouping happens. HAVING filters groups after a GROUP BY has been applied, so it can reference aggregate functions like COUNT() or SUM() that WHERE cannot.",
+  "code": "SELECT CustomerId, COUNT(*) AS OrderCount\nFROM Orders\nWHERE OrderDate >= '2026-01-01'   -- filters rows first\nGROUP BY CustomerId\nHAVING COUNT(*) > 5;              -- filters groups after aggregation",
+  "codeLanguage": "sql"
+ }
+]

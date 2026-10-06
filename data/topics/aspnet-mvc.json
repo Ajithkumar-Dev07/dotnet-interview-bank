@@ -1,0 +1,18 @@
+[
+ {
+  "id": "q1",
+  "heading": "Can you walk through the ASP.NET MVC request lifecycle?",
+  "parentHeading": null,
+  "content": "A request arrives and is matched to a route, which resolves a Controller and Action. Model binding maps request data (route values, query string, form body) onto the action's parameters. The action runs business logic, builds a Model, and returns a result (commonly a View). The View engine renders that View with the Model into HTML, which is sent back as the response.",
+  "code": null,
+  "codeLanguage": null
+ },
+ {
+  "id": "q2",
+  "heading": "What's the difference between ViewData, ViewBag, and TempData?",
+  "parentHeading": null,
+  "content": "ViewData is a dictionary (string keys, object values) for passing data from a controller to a view in that single request, requiring casts on read. ViewBag is the same store, exposed as a dynamic object for cleaner syntax. TempData also passes data from controller to view, but survives one additional request -- commonly used to carry a message across a redirect.",
+  "code": "public IActionResult Index()\n{\n    ViewData[\"Title\"] = \"Dashboard\";\n    ViewBag.UserName = \"Ajith\";\n    TempData[\"SuccessMessage\"] = \"Saved successfully\";\n    return View();\n}",
+  "codeLanguage": "csharp"
+ }
+]

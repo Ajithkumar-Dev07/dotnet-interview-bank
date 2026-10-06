@@ -1,0 +1,18 @@
+[
+ {
+  "id": "q1",
+  "heading": "What is Dapper and how does it differ from Entity Framework?",
+  "parentHeading": null,
+  "content": "Dapper is a lightweight micro-ORM that maps SQL query results directly onto objects, with very little abstraction over raw SQL. You write the SQL yourself, which gives tighter control over performance and generated queries. EF Core is a full ORM that also tracks changes and can generate SQL from LINQ. Teams often pick Dapper for performance-sensitive read paths and EF Core for general CRUD and migrations.",
+  "code": "using var connection = new SqlConnection(connectionString);\nvar products = connection.Query<Product>(\n    \"SELECT Id, Name, Price FROM Products WHERE CategoryId = @CategoryId\",\n    new { CategoryId = categoryId });",
+  "codeLanguage": "csharp"
+ },
+ {
+  "id": "q2",
+  "heading": "How do you execute an insert/update and get back the new row's identity with Dapper?",
+  "parentHeading": null,
+  "content": "Use ExecuteScalar (or QueryFirstOrDefault) with a statement that returns the generated identity, such as SCOPE_IDENTITY() in SQL Server.",
+  "code": "var sql = @\"INSERT INTO Products (Name, Price) VALUES (@Name, @Price);\n             SELECT CAST(SCOPE_IDENTITY() as int);\";\n\nvar newId = connection.ExecuteScalar<int>(sql, new { Name = \"Widget\", Price = 9.99m });",
+  "codeLanguage": "csharp"
+ }
+]

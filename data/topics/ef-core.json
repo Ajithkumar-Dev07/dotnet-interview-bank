@@ -1,0 +1,18 @@
+[
+ {
+  "id": "q1",
+  "heading": "What's the difference between eager, lazy, and explicit loading?",
+  "parentHeading": null,
+  "content": "Eager loading fetches related data up front with Include(), in the same query. Lazy loading fetches related data automatically the first time a navigation property is accessed, via proxies -- convenient but can cause many small queries (the N+1 problem) if not watched. Explicit loading fetches related data on demand, but requires an explicit call (Entry(...).Collection(...).Load()) rather than happening automatically.",
+  "code": "// Eager\nvar order = context.Orders.Include(o => o.Items).First(o => o.Id == id);\n\n// Explicit\nvar order = context.Orders.First(o => o.Id == id);\ncontext.Entry(order).Collection(o => o.Items).Load();",
+  "codeLanguage": "csharp"
+ },
+ {
+  "id": "q2",
+  "heading": "How do EF Core migrations work?",
+  "parentHeading": null,
+  "content": "Migrations are code files that describe incremental changes to your model (add table, add column, etc.). You generate one after changing your entity classes, then apply it to update the actual database schema to match.",
+  "code": "# Create a migration after changing your model\ndotnet ef migrations add AddProductDiscount\n\n# Apply pending migrations to the database\ndotnet ef database update",
+  "codeLanguage": "bash"
+ }
+]

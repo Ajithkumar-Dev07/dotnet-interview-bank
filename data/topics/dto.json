@@ -1,0 +1,18 @@
+[
+ {
+  "id": "q1",
+  "heading": "What is a DTO, and why not just return your EF entity classes directly from an API?",
+  "parentHeading": null,
+  "content": "A DTO (Data Transfer Object) is a plain object shaped specifically for what a client needs, separate from your internal domain/entity model. Returning entities directly risks leaking internal fields, creates tight coupling between your database schema and your public API contract, and can trigger unwanted lazy-loading or serialization cycles on navigation properties.",
+  "code": "// Entity (internal, has more than the API should expose)\npublic class User\n{\n    public int Id { get; set; }\n    public string Email { get; set; }\n    public string PasswordHash { get; set; }\n}\n\n// DTO (what the API actually returns)\npublic class UserDto\n{\n    public int Id { get; set; }\n    public string Email { get; set; }\n}",
+  "codeLanguage": "csharp"
+ },
+ {
+  "id": "q2",
+  "heading": "What's a simple way to map between an entity and a DTO?",
+  "parentHeading": null,
+  "content": "For small projects, map manually in the controller or a mapping method. For larger projects, a library like AutoMapper reduces repetitive mapping code -- configure the mapping once, then call Map<T>() wherever needed.",
+  "code": "// Manual mapping\nvar dto = new UserDto { Id = user.Id, Email = user.Email };\n\n// AutoMapper\nCreateMap<User, UserDto>();\nvar dto = mapper.Map<UserDto>(user);",
+  "codeLanguage": "csharp"
+ }
+]

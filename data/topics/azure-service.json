@@ -1,0 +1,18 @@
+[
+ {
+  "id": "q1",
+  "heading": "What is Azure App Service, and what do you deploy to it?",
+  "parentHeading": null,
+  "content": "Azure App Service is a fully managed platform-as-a-service (PaaS) for hosting web apps and APIs without managing the underlying servers/OS. You deploy your compiled app (e.g. a published .NET app) to it, and Azure handles scaling, patching, and load balancing.",
+  "code": null,
+  "codeLanguage": null
+ },
+ {
+  "id": "q2",
+  "heading": "What's the difference between Azure Functions and Azure App Service?",
+  "parentHeading": null,
+  "content": "Azure Functions is a serverless, event-driven compute service -- code runs in response to a trigger (HTTP request, queue message, timer) and you're billed per execution, with the platform scaling to zero when idle. App Service runs a continuously hosted web app/API, better suited to applications that need to stay warm and handle sustained traffic predictably.",
+  "code": "public class HttpTriggerFunction\n{\n    [Function(\"GetProduct\")]\n    public HttpResponseData Run(\n        [HttpTrigger(AuthorizationLevel.Function, \"get\", Route = \"products/{id}\")] HttpRequestData req,\n        int id)\n    {\n        var response = req.CreateResponse(HttpStatusCode.OK);\n        response.WriteString($\"Product {id}\");\n        return response;\n    }\n}",
+  "codeLanguage": "csharp"
+ }
+]

@@ -1,0 +1,18 @@
+[
+ {
+  "id": "q1",
+  "heading": "What is REST and what are its key constraints?",
+  "parentHeading": null,
+  "content": "REST (Representational State Transfer) is an architectural style for networked APIs. Key constraints include: statelessness (each request carries everything needed; the server holds no client session state), a uniform interface (consistent use of HTTP verbs/resources), resource-based URLs, and cacheability of responses where appropriate.",
+  "code": null,
+  "codeLanguage": null
+ },
+ {
+  "id": "q2",
+  "heading": "What does 'idempotent' mean for an HTTP method, and which methods are idempotent?",
+  "parentHeading": null,
+  "content": "An idempotent operation produces the same result no matter how many times it's repeated. GET, PUT, and DELETE are expected to be idempotent -- calling PUT with the same payload twice should leave the resource in the same state either way. POST is generally not idempotent, since repeating it typically creates a new resource each time.",
+  "code": "PUT /api/products/42\n{ \"name\": \"Widget\", \"price\": 9.99 }\n\n// Calling this twice leaves product 42 in the same final state -- idempotent.\n// A repeated POST /api/products with the same body would create two separate products.",
+  "codeLanguage": "http"
+ }
+]

@@ -1,0 +1,60 @@
+{
+ "version": 1,
+ "topics": [
+  {
+   "id": "csharp",
+   "label": "C#",
+   "file": "topics/csharp.json"
+  },
+  {
+   "id": "csharp-advanced",
+   "label": "C# Advanced",
+   "file": "topics/csharp-advanced.json"
+  },
+  {
+   "id": "sql",
+   "label": "SQL",
+   "file": "topics/sql.json"
+  },
+  {
+   "id": "aspnet-mvc",
+   "label": "ASP.NET MVC",
+   "file": "topics/aspnet-mvc.json"
+  },
+  {
+   "id": "web-api",
+   "label": "Web API",
+   "file": "topics/web-api.json"
+  },
+  {
+   "id": "dapper",
+   "label": "Dapper",
+   "file": "topics/dapper.json"
+  },
+  {
+   "id": "ef-core",
+   "label": "Entity Framework Core",
+   "file": "topics/ef-core.json"
+  },
+  {
+   "id": "apis",
+   "label": "APIs",
+   "file": "topics/apis.json"
+  },
+  {
+   "id": "swagger",
+   "label": "Swagger",
+   "file": "topics/swagger.json"
+  },
+  {
+   "id": "azure-service",
+   "label": "Azure Service",
+   "file": "topics/azure-service.json"
+  },
+  {
+   "id": "dto",
+   "label": "DTO",
+   "file": "topics/dto.json"
+  }
+ ]
+}

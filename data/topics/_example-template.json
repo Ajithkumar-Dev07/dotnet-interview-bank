@@ -1,0 +1,10 @@
+[
+  {
+    "id": "q1",
+    "heading": "Replace this with your question text",
+    "parentHeading": null,
+    "content": "Replace this with the prose explanation. Use \\n for line breaks and \"-   \" to start bullet lines.",
+    "code": "// Optional: replace with a code/SQL sample, or remove this field entirely",
+    "codeLanguage": "csharp"
+  }
+]

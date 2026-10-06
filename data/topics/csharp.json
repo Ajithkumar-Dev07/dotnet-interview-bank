@@ -1,0 +1,26 @@
+[
+ {
+  "id": "q1",
+  "heading": "What is the difference between 'ref' and 'out' parameters?",
+  "parentHeading": null,
+  "content": "Both pass arguments by reference instead of by value, so changes inside the method are visible to the caller.\n'ref' requires the variable to be initialized before it's passed in. 'out' does not require prior initialization, but the method must assign a value to it before returning.",
+  "code": "void UpdateRef(ref int x) { x += 10; }\nvoid AssignOut(out int y) { y = 42; } // must be set before return\n\nint a = 5;\nUpdateRef(ref a);      // a is now 15\n\nint b;                 // no need to initialize\nAssignOut(out b);      // b is now 42",
+  "codeLanguage": "csharp"
+ },
+ {
+  "id": "q2",
+  "heading": "What is boxing and unboxing?",
+  "parentHeading": null,
+  "content": "Boxing converts a value type (e.g. int, struct) to a reference type (object) by wrapping it on the heap. Unboxing extracts the value type back out of the object. Both carry a performance cost, so they're worth avoiding in hot paths, especially inside loops or generic collections that aren't strongly typed.",
+  "code": "int number = 123;\nobject boxed = number;        // boxing: heap allocation\nint unboxed = (int)boxed;     // unboxing: must cast back to the exact value type",
+  "codeLanguage": "csharp"
+ },
+ {
+  "id": "q3",
+  "heading": "What is the difference between an abstract class and an interface?",
+  "parentHeading": null,
+  "content": "An abstract class can hold shared implementation, fields, and constructors, and a class can inherit from only one. An interface defines a contract with no shared state (default interface methods aside) and a class can implement any number of interfaces. Use an abstract class for a common base with shared logic; use an interface to describe a capability unrelated classes can all implement.",
+  "code": "public abstract class Animal\n{\n    public string Name { get; set; }\n    public abstract string MakeSound();\n}\n\npublic interface IFlyable\n{\n    void Fly();\n}\n\npublic class Bird : Animal, IFlyable\n{\n    public override string MakeSound() => \"Tweet\";\n    public void Fly() => Console.WriteLine(\"Flying\");\n}",
+  "codeLanguage": "csharp"
+ }
+]
