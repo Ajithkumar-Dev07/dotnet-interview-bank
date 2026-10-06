@@ -14,5 +14,38 @@
   "content": "ViewData is a dictionary (string keys, object values) for passing data from a controller to a view in that single request, requiring casts on read. ViewBag is the same store, exposed as a dynamic object for cleaner syntax. TempData also passes data from controller to view, but survives one additional request -- commonly used to carry a message across a redirect.",
   "code": "public IActionResult Index()\n{\n    ViewData[\"Title\"] = \"Dashboard\";\n    ViewBag.UserName = \"Ajith\";\n    TempData[\"SuccessMessage\"] = \"Saved successfully\";\n    return View();\n}",
   "codeLanguage": "csharp"
- }
+ },
+  {
+    "id": "q3",
+    "heading": "What is Middleware in ASP.NET Core?",
+    "parentHeading": null,
+    "content": "Middleware is a component in the ASP.NET Core HTTP request pipeline that processes an incoming request and/or outgoing response. Multiple middleware components execute in sequence. In my CRM project, middleware can be used for common cross-cutting concerns such as JWT authentication, global exception handling, request/response logging, security headers, and request validation.",
+    "code": "public async Task InvokeAsync(HttpContext context)\n{\n    try\n    {\n        await _next(context);\n    }\n    catch (Exception ex)\n    {\n        context.Response.StatusCode = 500;\n        await context.Response.WriteAsJsonAsync(new\n        {\n            message = \"Internal server error\"\n        });\n    }\n}",
+    "codeLanguage": "csharp"
+  },
+  {
+    "id": "q4",
+    "heading": "How do you configure Middleware in Program.cs?",
+    "parentHeading": "What is Middleware in ASP.NET Core?",
+    "content": "In my CRM project, I register the global exception-handling middleware in the ASP.NET Core request pipeline before authentication and authorization. This allows exceptions occurring in later middleware or controllers to be handled centrally.",
+    "code": "app.UseMiddleware<GlobalExceptionMiddleware>();\n\napp.UseAuthentication();\napp.UseAuthorization();\n\napp.MapControllers();",
+    "codeLanguage": "csharp"
+  },
+  {
+    "id": "q5",
+    "heading": "What is Dependency Injection (DI) in ASP.NET Core?",
+    "parentHeading": null,
+    "content": "Dependency Injection is a design pattern where a class receives the objects it depends on from outside instead of creating them internally. It reduces tight coupling and improves maintainability and testability. In ASP.NET Core, the built-in DI container is commonly used to register services and inject them into controllers or other services.",
+    "code": "// Interface\npublic interface IProductService\n{\n    string GetProduct();\n}\n\n// Implementation\npublic class ProductService : IProductService\n{\n    public string GetProduct()\n    {\n        return \"Laptop\";\n    }\n}\n\n// Controller\npublic class ProductController : ControllerBase\n{\n    private readonly IProductService _productService;\n\n    // Constructor Injection\n    public ProductController(IProductService productService)\n    {\n        _productService = productService;\n    }\n\n    [HttpGet]\n    public IActionResult Get()\n    {\n        return Ok(_productService.GetProduct());\n    }\n}",
+    "codeLanguage": "csharp"
+  },
+  {
+    "id": "q6",
+    "heading": "How do you register a service using Dependency Injection?",
+    "parentHeading": "What is Dependency Injection (DI) in ASP.NET Core?",
+    "content": "In ASP.NET Core, I register the service and its implementation in the built-in DI container. After registration, ASP.NET Core automatically provides the required IProductService instance when creating ProductController.",
+    "code": "builder.Services.AddScoped<IProductService, ProductService>();",
+    "codeLanguage": "csharp"
+  }
+
 ]
